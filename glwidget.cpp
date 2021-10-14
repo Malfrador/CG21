@@ -69,10 +69,7 @@ void GLWidget::resizeGL(int width, int height)
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
     std::cout << "Mouse press at " << event->pos().x() << " " << event->pos().y() << std::endl;
-    double x;
-    double y;
-    convertCoords(event->pos().x(), event->pos().y(), &x, &y);
-    mPoints.append(QVector2D(x, y));
+    mPoints.append(*convertCoords(event->pos().x(), event->pos().y()));
     update();
 }
 void GLWidget::mouseReleaseEvent(QMouseEvent *event)
@@ -83,10 +80,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
     std::cout << "Mouse move to " << event->pos().x() << " " << event->pos().y() << std::endl;
-    double x;
-    double y;
-    convertCoords(event->pos().x(), event->pos().y(), &x, &y);
-    mPoints.append(QVector2D(x, y));
+    mPoints.append(*convertCoords(event->pos().x(), event->pos().y()));
     update();
 }
 void GLWidget::setPointSize(int size)
@@ -104,7 +98,8 @@ void GLWidget::modeToggled(bool points)
         mModus = Linien;
 }
 
-void GLWidget::convertCoords(int x, int y, double *nx, double *ny) {
-    *ny = mHeight - y - 1 - mHeight / 2 ;
-    *nx = x - mWidth /2 ;
+QVector2D* GLWidget::convertCoords(int x, int y) {
+    double ny = mHeight - y - 1 - mHeight / 2 ;
+    double nx = x - mWidth /2 ;
+    return new QVector2D(nx, ny);
 }

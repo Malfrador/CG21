@@ -76,7 +76,7 @@ private:
     float mPointSize;
     QList<QVector2D> mPoints;
     enum mode {Punkte, Linien} mModus;
-    void convertCoords(int x, int y, double *wx, double *wy);
+    QVector2D* convertCoords(int x, int y);
 };
 
 #endif
